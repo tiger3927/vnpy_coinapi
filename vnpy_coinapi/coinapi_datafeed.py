@@ -9,7 +9,6 @@ from vnpy.trader.setting import SETTINGS
 from vnpy.trader.constant import Interval
 from vnpy.trader.object import BarData, HistoryRequest
 
-
 INTERVAL_VT2CA = {
     Interval.MINUTE: "1MIN",
     Interval.HOUR: "1HRS",
@@ -24,6 +23,9 @@ COINAPI_HOST = "https://rest.coinapi.io"
 
 def to_ca_symbol(symbol, exchange):
     """将交易所代码转换为CoinAPI代码"""
+    print("----COINAPI----  exchange.value :   ", exchange.value)
+    v=exchange.value
+
     return f"{exchange.value}_{symbol}".upper()
 
 
@@ -42,16 +44,21 @@ class CoinapiDatafeed(BaseDatafeed):
         start = req.start
         end = req.end
 
+        print("----COINAPI----  symbol, exchange :   ", symbol, exchange)
         symbol_id = to_ca_symbol(symbol, exchange)
+        print("----COINAPI----  symbol_id :   ", symbol_id)
+
         period_id = INTERVAL_VT2CA[interval]
         time_start = datetime.strftime(start, "%Y-%m-%dT%H:%M:%S")
         time_end = datetime.strftime(end, "%Y-%m-%dT%H:%M:%S")
 
+        return None
         url = COINAPI_HOST + f"/v1/ohlcv/{symbol_id}/history?"
         params = {
             "period_id": period_id,
             "time_start": time_start,
-            "time_end": time_end
+            "time_end": time_end,
+            "limit": 100000
         }
         headers = {'X-CoinAPI-Key': self.password}
 
@@ -67,7 +74,7 @@ class CoinapiDatafeed(BaseDatafeed):
             return None
 
         bars: List[BarData] = []
-        
+
         data = json.loads(response.text)
         for d in data:
             dt = datetime.strptime(d["time_period_start"], "%Y-%m-%dT%H:%M:%S.%f0Z")
