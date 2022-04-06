@@ -13,6 +13,21 @@
 
 ## 说明
 
+修改了原来得COINAPI，只用于 binance 的 U本位合约的 行情访问
+
+|名称|含义|必填|举例|
+|---------|----|---|---|
+|datafeed.name|名称|是|coinapi|
+|datafeed.username|用户名|是|binance apikey|
+|datafeed.password|密码|是|binance secretkey|
+
+
+原因： COINAPI 访问限制太多，无法满足访问数量的要求......
+切记： 如果使用本版本替换 原来的 COINAPI  以下已经作废！
+
+----------------------------
+
+
 基于CoinAPI开发，支持以下数字货币的K线数据：
 
 * BITMEX
