@@ -50,7 +50,7 @@ class CoinapiDatafeed(BaseDatafeed):
 
     def query_bar_history(self, req: HistoryRequest) -> Optional[List[BarData]]:
         """查询k线数据"""
-        symbol = req.symbol.lower()
+        symbol = req.symbol
         exchange = req.exchange
         interval = req.interval
         timestart = req.start.timestamp()
