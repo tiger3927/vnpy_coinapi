@@ -134,6 +134,8 @@ class CoinapiDatafeed(BaseDatafeed):
                 low_price=o.low,
                 close_price=o.close,
                 volume=o.volume,
+                turnover=o.numTrades,
+                open_interest=o.takerBuyBaseAssetVolume,
                 gateway_name="CA",
             )
             bars.append(bar)
